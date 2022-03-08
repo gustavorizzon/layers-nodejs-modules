@@ -1,0 +1,27 @@
+org: gustavorizzon
+app: layers-nodejs-modules
+service: layers-nodejs-modules
+
+frameworkVersion: '2 || 3'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: 'hello'
+          method: get
+    layers:
+      - {Ref: NodeModulesLambdaLayer}
+
+layers:
+  NodeModules:
+    path: layers
+    compatibleRuntimes:
+      - nodejs12.x
